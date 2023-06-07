@@ -18,8 +18,29 @@ const createContact= async(email, phoneNumber)=> {
     });
 }
 
+const createSecondaryContact= async(email, phoneNumber, linkedId)=> {
+    return await Contact.create({
+        email,
+        phoneNumber,
+        linkedId,
+        linkPrecedence: 'secondary',
+    });
+}
+
+const findLinkedContactsByPrimaryContactId=async(primaryContactId)=>{
+    return await Contact.findAll({
+        where: {
+            linkedId: primaryContactId,
+        },
+    });
+}
+
 
 module.exports = {
     findPrimaryContactByEmailOrPhoneNumber,
     createContact,
+    findLinkedContactsByPrimaryContactId,
+    createSecondaryContact,
+
+
 };
