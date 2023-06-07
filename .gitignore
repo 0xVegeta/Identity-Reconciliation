@@ -1,0 +1,7 @@
+// Dependecies
+node_modules
+
+// Environment variables
+.env
+.idea/
+package-lock.json

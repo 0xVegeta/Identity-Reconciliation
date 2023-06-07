@@ -1,0 +1,29 @@
+{
+  "name": "Identity-Reconciliation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "dotenv": "^16.1.4",
+    "express": "^4.18.2",
+    "joi": "^17.9.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0xVegeta/Identity-Reconciliation.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/0xVegeta/Identity-Reconciliation/issues"
+  },
+  "homepage": "https://github.com/0xVegeta/Identity-Reconciliation#readme"
+}
