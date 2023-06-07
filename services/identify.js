@@ -13,7 +13,14 @@ const processIdentification = async({requestData})=>{
         primaryContact = await createContact(email, phoneNumber);
         return {
             statusCode: 200,
-            responseData: { ...primaryContact.toJSON(), linkedContacts: [] }
+            responseData: {
+                contact: {
+                    primaryContactId: primaryContact.id,
+                    emails: [primaryContact.email],
+                    phoneNumbers: [primaryContact.phoneNumber],
+                    secondaryContactIds: [],
+                },
+            }
         }
     }
 
