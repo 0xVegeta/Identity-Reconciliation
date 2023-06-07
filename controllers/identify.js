@@ -1,13 +1,17 @@
-const processInput = (req, res)=>{
-    try{
-        return res.status(200).json({msg:"success"})
-
-    }
-    catch(err){
-        return res.json(500).json({error: err})
-    }
+const identityService = require("../services/identify");
+const handleInput = async(req, res)=>{
+    const { email, phoneNumber } = req.body
+    return identityService.processIdentification({
+        requestData: {email, phoneNumber}
+    })
+        .then(({ statusCode, responseData }) => {
+            return res.status(statusCode).json(responseData)
+        })
+        .catch(err => {
+            return res.status(500).json({errMsg: err})
+        })
 }
 
 module.exports = {
-    processInput
+    handleInput
 }
