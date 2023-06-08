@@ -8,7 +8,7 @@ const {apiRouters} = require("./routes/identify");
 
 expressApp.use(bodyParser.urlencoded({ extended: false }));
 expressApp.use(bodyParser.json());
-expressApp.use("/api", apiRouters);
+expressApp.use("/", apiRouters);
 
 
 

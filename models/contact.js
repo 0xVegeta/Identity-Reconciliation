@@ -9,12 +9,12 @@ const sequelize = new Sequelize(process.env.SEQUELIZE_DATABASE_URI, {
 const Contact = sequelize.define('Contact', {
     phoneNumber: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
         unique: 'uniquePhoneNumberEmailCombo',
     },
     email: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
         unique: 'uniquePhoneNumberEmailCombo',
     },
     linkedId: {
