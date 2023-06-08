@@ -10,10 +10,12 @@ const Contact = sequelize.define('Contact', {
     phoneNumber: {
         type: DataTypes.STRING,
         allowNull: true,
+        unique: 'uniquePhoneNumberEmailCombo',
     },
     email: {
         type: DataTypes.STRING,
         allowNull: true,
+        unique: 'uniquePhoneNumberEmailCombo',
     },
     linkedId: {
         type: DataTypes.INTEGER,
@@ -37,6 +39,14 @@ const Contact = sequelize.define('Contact', {
         type: DataTypes.DATE,
         allowNull: true,
     },
+}, {
+    indexes: [
+        {
+            unique: true,
+            fields: ['phoneNumber', 'email'],
+            name: 'uniquePhoneNumberEmailCombo',
+        },
+    ],
 });
 
 Contact.belongsTo(Contact, {
