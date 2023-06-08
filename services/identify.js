@@ -1,38 +1,46 @@
 const {
-    findPrimaryContactByEmailOrPhoneNumber,
+    findContactByEmailOrPhoneNumber,
     createContact,
     findLinkedContactsByPrimaryContactId,
-    createSecondaryContact
+    createSecondaryContact,
+    findContactById
 } = require('./modelServices');
 const processIdentification = async({requestData})=>{
     try {
         const {email, phoneNumber} = requestData
         // Find primary contact based on email or phoneNumber
 
-        let primaryContact = await findPrimaryContactByEmailOrPhoneNumber(email, phoneNumber)
+        let primaryContact = await findContactByEmailOrPhoneNumber({email, phoneNumber, contactType: 'primary'})
         if (!primaryContact) {
-
-            // If no primary contact found, create a new primary contact
-            if(!email || !phoneNumber) {
-                return {
-                    statusCode: 400,
-                    responseData:{
-                        errorMsg: "Email or phone number can't be null for creating a new contact"
+            const secondaryContact = await findContactByEmailOrPhoneNumber({email, phoneNumber, contactType: 'secondary'})
+            // Check if a secondary contact is present for the given contact details
+            if(secondaryContact){
+                primaryContact = await findContactById({contactId: secondaryContact.linkedId, contactType: 'primary'})
+            }else{
+                // If no primary or secondary contact found, create a new primary contact
+                if(!email || !phoneNumber) {
+                    return {
+                        statusCode: 400,
+                        responseData:{
+                            errorMsg: "Email or phone number can't be null for creating a new contact"
+                        }
                     }
                 }
-            }
-            primaryContact = await createContact(email, phoneNumber);
-            return {
-                statusCode: 200,
-                responseData: {
-                    contact: {
-                        primaryContactId: primaryContact.id,
-                        emails: [primaryContact.email],
-                        phoneNumbers: [primaryContact.phoneNumber],
-                        secondaryContactIds: [],
-                    },
+                primaryContact = await createContact(email, phoneNumber)
+                return {
+                    statusCode: 200,
+                    responseData: {
+                        contact: {
+                            primaryContactId: primaryContact.id,
+                            emails: [primaryContact.email],
+                            phoneNumbers: [primaryContact.phoneNumber],
+                            secondaryContactIds: [],
+                        },
+                    }
                 }
+
             }
+
         }
 
         let linkedContacts = await findLinkedContactsByPrimaryContactId(primaryContact.id)
@@ -52,11 +60,13 @@ const processIdentification = async({requestData})=>{
                 }
             }
         }
-        if ((email && primaryContact.email !== email) || (phoneNumber &&primaryContact.phoneNumber !== phoneNumber)) {
+        if ((primaryContact.email !== email) || (primaryContact.phoneNumber !== phoneNumber)) {
+            if(email && phoneNumber) {
                 await createSecondaryContact(email, phoneNumber, primaryContact.id)
                 linkedContacts = await findLinkedContactsByPrimaryContactId(primaryContact.id)
+            }
         }
-        const contacts = Array.from(new Set([primaryContact.phoneNumber, ...linkedContacts.map(contact => contact.phoneNumber)]))
+
         return {
             statusCode: 200,
             responseData: {

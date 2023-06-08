@@ -32,7 +32,16 @@ const findLinkedContactsByPrimaryContactId=async(primaryContactId)=>{
         where: {
             linkedId: primaryContactId,
         },
-    });
+    })
+}
+
+const findContactById = async ({contactId, contactType}) => {
+    return await Contact.findOne({
+            where: {
+                id: contactId,
+                linkPrecedence: contactType,
+            },
+    })
 }
 
 
@@ -41,4 +50,5 @@ module.exports = {
     createContact,
     findLinkedContactsByPrimaryContactId,
     createSecondaryContact,
+    findContactById
 };
