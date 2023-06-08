@@ -1,11 +1,11 @@
 const Contact = require('../models/contact')
 const { Sequelize } = require('sequelize');
 
-const findPrimaryContactByEmailOrPhoneNumber= async(email, phoneNumber)=> {
+const findContactByEmailOrPhoneNumber= async({email, phoneNumber, contactType})=> {
     return await Contact.findOne({
         where: {
             [Sequelize.Op.or]: [{ email }, { phoneNumber }],
-            linkPrecedence: 'primary',
+            linkPrecedence: contactType,
         },
     })
 }
@@ -37,10 +37,8 @@ const findLinkedContactsByPrimaryContactId=async(primaryContactId)=>{
 
 
 module.exports = {
-    findPrimaryContactByEmailOrPhoneNumber,
+    findContactByEmailOrPhoneNumber,
     createContact,
     findLinkedContactsByPrimaryContactId,
     createSecondaryContact,
-
-
 };
