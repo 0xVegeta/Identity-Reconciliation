@@ -11,7 +11,8 @@ const handleInput = async(req, res)=>{
     //validation of email and phone numbers
     const schema = Joi.object({
         email: Joi.string().email().required().allow(null),
-        phoneNumber: Joi.string().required().allow(null).pattern(/^[0-9]{10,14}$/)
+        phoneNumber: Joi.string().required().allow(null).pattern(/^[0-9]{6,14}$/,
+            'Phone number must be a string of 6 to 14 digits.')
     })
 
     const { error } = schema.validate({ email, phoneNumber });
