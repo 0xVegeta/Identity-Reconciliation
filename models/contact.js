@@ -3,8 +3,17 @@ const dotenv = require('dotenv');
 dotenv.config({path: `.env`});
 
 const sequelize = new Sequelize(process.env.SEQUELIZE_DATABASE_URI, {
-    dialect: 'mysql',
+    dialect: 'postgres',
 })
+
+sequelize
+    .authenticate()
+    .then(() => {
+        console.log('Database Connection Has Been Established Successfully.');
+    })
+    .catch(err => {
+        console.log(`Unable To Connect To The Database : ${err}`);
+    });
 
 const Contact = sequelize.define('Contact', {
     phoneNumber: {
