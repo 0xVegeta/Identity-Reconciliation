@@ -2,6 +2,11 @@ const identityService = require("../services/identify");
 const Joi = require("joi")
 const handleInput = async(req, res)=>{
     const { email, phoneNumber } = req.body
+    if(!email && !phoneNumber){
+        return res.status(400).json({
+            error: "Both phone number and email can't be zero"
+        })
+    }
 
     //validation of email and phone numbers
     const schema = Joi.object({

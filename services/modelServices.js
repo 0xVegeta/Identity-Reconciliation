@@ -10,6 +10,15 @@ const findContactByEmailOrPhoneNumber= async({email, phoneNumber, contactType})=
     })
 }
 
+const findContactByEmailAndPhoneNumber= async({email, phoneNumber, contactType})=> {
+    return await Contact.findOne({
+        where: {
+            [Sequelize.Op.and]: [{ email }, { phoneNumber }],
+            linkPrecedence: contactType,
+        },
+    })
+}
+
 const createContact= async(email, phoneNumber)=> {
     return await Contact.create({
         email,
@@ -44,11 +53,23 @@ const findContactById = async ({contactId, contactType}) => {
     })
 }
 
+const updateContact = async({ contactId, contactType,primaryContactId })=>{
+    return await Contact.update(
+        {
+            linkPrecedence: contactType,
+            linkedId: primaryContactId
+        },
+        {where: {id: contactId}}
+    )
+}
+
 
 module.exports = {
     findContactByEmailOrPhoneNumber,
+    findContactByEmailAndPhoneNumber,
     createContact,
     findLinkedContactsByPrimaryContactId,
     createSecondaryContact,
-    findContactById
+    findContactById,
+    updateContact
 };
