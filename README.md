@@ -64,7 +64,7 @@ Start the server
 
 
 
-## Edge cases
+## Edge cases (Future scope)
 
 - Handling of secondary contacts which were once linked to primary contact (but now a secondary contact)
 
