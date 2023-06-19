@@ -11,8 +11,18 @@ To establish a connection between customer contacts, the "Contact" rows are link
 - The linkedId field holds the ID of the primary contact associated with the  secondary contact row.
 
 ## Wanna try out the API endpoint
-```bash
+Hit the below endpoint in POSTMAN 
+```http
 https://identity-reconcilation-7f5o.onrender.com/identify
+```
+#### Request Body (sample)
+
+
+```http
+  {
+    "email": "test31@example.com",
+    "phoneNumber": "123456"
+}
 ```
 
 
