@@ -10,6 +10,11 @@ To establish a connection between customer contacts, the "Contact" rows are link
 - The oldest contact row is considered "primary," and the rest are marked as "secondary."
 - The linkedId field holds the ID of the primary contact associated with the  secondary contact row.
 
+## Wanna try out the API endpoint
+```bash
+https://identity-reconcilation-7f5o.onrender.com/identify
+```
+
 
 ## Run Locally
 
