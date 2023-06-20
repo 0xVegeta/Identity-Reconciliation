@@ -10,6 +10,11 @@ To establish a connection between customer contacts, the "Contact" rows are link
 - The oldest contact row is considered "primary," and the rest are marked as "secondary."
 - The linkedId field holds the ID of the primary contact associated with the  secondary contact row.
 
+### Detailed problem statement: 
+```bash
+  https://cat-parade-cd9.notion.site/Customer-Identity-Reconcilation-System-a00f33cf47e94f3f819fa85e417c92c6
+```
+
 ## Wanna try out the API endpoint
 Hit the below endpoint in POSTMAN 
 ```http
